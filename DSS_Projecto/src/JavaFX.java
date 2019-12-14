@@ -2,10 +2,13 @@ import java.io.File;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.binding.Bindings;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -41,10 +44,13 @@ public class JavaFX extends Application
         // Automatically begin the playback
         player.setAutoPlay(true);
 
-        // Create a 400X300 MediaView
+        //change width and height to fit video
         final MediaView mediaView = new MediaView(player);
-        mediaView.setFitWidth(400);
-        mediaView.setFitHeight(300);
+        DoubleProperty width = mediaView.fitWidthProperty();
+        DoubleProperty height = mediaView.fitHeightProperty();
+        width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+        height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
+        mediaView.setPreserveRatio(true);
         mediaView.setSmooth(true);
 
         // Create the DropShadow effect
@@ -57,7 +63,9 @@ public class JavaFX extends Application
 
         // Create the Buttons
         Button playButton = new Button("Play");
+        Button pauseButton = new Button("Pause");
         Button stopButton = new Button("Stop");
+        Button closeButton = new Button("Close");
 
         // Create the Event Handlers for the Button
         playButton.setOnAction(new EventHandler <ActionEvent>()
@@ -66,8 +74,7 @@ public class JavaFX extends Application
             {
                 if (player.getStatus() == Status.PLAYING)
                 {
-                    player.stop();
-                    player.play();
+                    //
                 }
                 else
                 {
@@ -81,6 +88,22 @@ public class JavaFX extends Application
             public void handle(ActionEvent event)
             {
                 player.stop();
+            }
+        });
+
+        pauseButton.setOnAction(new EventHandler <ActionEvent>()
+        {
+            public void handle(ActionEvent event)
+            {
+                player.pause();
+            }
+        });
+
+        closeButton.setOnAction(new EventHandler <ActionEvent>()
+        {
+            public void handle(ActionEvent event)
+            {
+                stage.close();
             }
         });
 
@@ -113,25 +136,19 @@ public class JavaFX extends Application
         });
 
         // Create the HBox
-        HBox controlBox = new HBox(5, playButton, stopButton);
+        HBox controlBox = new HBox(5, playButton, pauseButton, stopButton,closeButton);
+        controlBox.setAlignment(Pos.BASELINE_CENTER);
 
         // Create the VBox
-        VBox root = new VBox(5,mediaView,controlBox,messageArea);
-
-        // Set the Style-properties of the HBox
-        root.setStyle("-fx-padding: 10;" +
-                "-fx-border-style: solid inside;" +
-                "-fx-border-width: 2;" +
-                "-fx-border-insets: 5;" +
-                "-fx-border-radius: 5;" +
-                "-fx-border-color: blue;");
+        VBox root = new VBox(-40,mediaView,controlBox/*,messageArea*/);
+        root.setAlignment(Pos.BASELINE_CENTER);
 
         // Create the Scene
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 1200, 675);
         // Add the scene to the Stage
         stage.setScene(scene);
         // Set the title of the Stage
-        stage.setTitle("Handling Media Errors");
+        stage.setTitle("Media Content");
         // Display the Stage
         stage.show();
     }

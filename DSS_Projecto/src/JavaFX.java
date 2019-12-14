@@ -39,10 +39,10 @@ public class JavaFX extends Application{
         root.getChildren().add(viewer);
 
         //set the Scene
-        Scene scenes = new Scene(root, 500, 500, Color.BLACK);
+        Scene scenes = new Scene(root, 1200, 800, Color.BLACK);
         stage.setScene(scenes);
         stage.setTitle("Media Content");
-        stage.setFullScreen(true);
+        stage.setFullScreen(false);
         stage.show();
         player.play();
     }

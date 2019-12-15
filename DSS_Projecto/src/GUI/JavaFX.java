@@ -1,4 +1,4 @@
-package MediaCenter;
+package GUI;
 
 import java.io.File;
 import javafx.application.Application;

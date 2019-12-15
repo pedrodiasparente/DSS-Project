@@ -1,3 +1,5 @@
+package MediaCenter;
+
 public class Playlist {
 
     private Media musicas;

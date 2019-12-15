@@ -1,3 +1,5 @@
+package MediaCenter;
+
 import java.io.File;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
@@ -44,7 +46,7 @@ public class JavaFX extends Application
         //Converts media to string URL
         Media media = new Media(f.toURI().toURL().toString());
 
-        // Create a Media Player
+        // Create a MediaCenter.Media Player
         final MediaPlayer player = new MediaPlayer(media);
         // Automatically begin the playback
         player.setAutoPlay(true);
@@ -58,7 +60,7 @@ public class JavaFX extends Application
         mediaView.setPreserveRatio(true);
         mediaView.setSmooth(true);
 
-        // Media Ready
+        // MediaCenter.Media Ready
         player.setOnReady(() -> {
             System.out.println("media ready");
             // Create Time Slider
@@ -177,7 +179,7 @@ public class JavaFX extends Application
             {
                 public void run()
                 {
-                    // Handle asynchronous error in Media object.
+                    // Handle asynchronous error in MediaCenter.Media object.
                     printMessage(media.getError());
                 }
             });
@@ -204,7 +206,7 @@ public class JavaFX extends Application
             // Add the scene to the Stage
             stage.setScene(scene);
             // Set the title of the Stage
-            stage.setTitle("Media Content");
+            stage.setTitle("MediaCenter.Media Content");
             // Display the Stage
             stage.show();
         });

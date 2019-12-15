@@ -1,3 +1,5 @@
+package MediaCenter;
+
 import java.util.HashMap;
 
 public class MediaCenter {
@@ -51,7 +53,7 @@ public class MediaCenter {
     public int alteraCategoria(String nome, String categoria) {
         int res = 0;
 		/*
-		for (Media m : this.bibliotecaGeral.getMedia().values()) {
+		for (MediaCenter.Media m : this.bibliotecaGeral.getMedia().values()) {
 			if (nome == m.getMediaNome()) {
 				m.setMediaCategoria(categoria);
 				res = 1;

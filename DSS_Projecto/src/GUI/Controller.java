@@ -1,9 +1,12 @@
 package GUI;
 
+import MediaCenter.MediaCenter;
+
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Controller {
+    MediaCenter mediaCenter;
     private ArrayList<Frame> frames;
     private static final int LOGIN = 0;
     private static final int MAIN_MENU = 1;
@@ -56,6 +59,10 @@ public class Controller {
             f.setVisible(false);
         }
         frames.get(ALTERAR_CATEGORIA).setVisible(true);
+    }
+
+    public void login(String email, String password){
+        mediaCenter.login(email);
     }
 
 }

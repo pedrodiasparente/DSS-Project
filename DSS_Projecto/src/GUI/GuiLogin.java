@@ -30,10 +30,7 @@ class GuiLogin extends Frame {
         b1=new Button("submit");
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(b1.getLabel().equals("submit"))
-                    b1.setLabel("click me again");
-                else
-                    b1.setLabel("submit");
+                controller.login(name.getText(), pass.getText());
             }
         });
         this.setSize(400,400);

@@ -1,3 +1,5 @@
+package MediaCenter;
+
 public class Media {
 
     private double duracao;

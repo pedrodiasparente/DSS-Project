@@ -1,14 +1,18 @@
 import java.io.File;
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.binding.Bindings;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -19,6 +23,7 @@ import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class JavaFX extends Application
 {
@@ -53,13 +58,61 @@ public class JavaFX extends Application
         mediaView.setPreserveRatio(true);
         mediaView.setSmooth(true);
 
-        // Create the DropShadow effect
+        // Create the DropShadow effect, not sure if necessary
         DropShadow dropshadow = new DropShadow();
         dropshadow.setOffsetY(5.0);
         dropshadow.setOffsetX(5.0);
         dropshadow.setColor(Color.WHITE);
-
         mediaView.setEffect(dropshadow);
+
+        // Create Volume Slider
+        final Slider volumeSlider = new Slider(0.0, 1.0, 0.5);
+        volumeSlider.setMajorTickUnit(0.01);
+
+        // Create Time Slider
+        final Slider timeSlider = new Slider(0,6,0.0);
+
+        // Bind Properties
+        player.volumeProperty().bind(volumeSlider.valueProperty());
+
+        // Listen to the slider. When it changes, seek with the player.
+        // MediaPlayer.seek does nothing when the player is stopped, so the play/pause button's handler
+        // always sets the start time to the slider's current value, and then resets it to 0 after starting the player.
+        InvalidationListener sliderChangeListener = o-> {
+            Duration seekTo = Duration.seconds(timeSlider.getValue());
+            player.seek(seekTo);
+        };
+        timeSlider.valueProperty().addListener(sliderChangeListener);
+
+        // Link the player's time to the slider
+        player.currentTimeProperty().addListener(l-> {
+            // Temporarily remove the listener on the slider, so it doesn't respond to the change in playback time
+            // I thought timeSlider.isValueChanging() would be useful for this, but it seems to get stuck at true
+            // if the user slides the slider instead of just clicking a position on it.
+            timeSlider.valueProperty().removeListener(sliderChangeListener);
+
+            // Keep timeText's text up to date with the slider position.
+            Duration currentTime = player.getCurrentTime();
+            int value = (int) currentTime.toSeconds();
+            timeSlider.setValue(value);
+
+            // Re-add the slider listener
+            timeSlider.valueProperty().addListener(sliderChangeListener);
+        });
+
+        // Create the GridPane Volume
+        GridPane sliderPaneVol = new GridPane();
+        sliderPaneVol.setStyle("-fx-background-color:WHITE");
+
+        // Create the GridPane Time
+        GridPane sliderPaneTime = new GridPane();
+        sliderPaneTime.setStyle("-fx-background-color:WHITE");
+
+        // Add the details to the GridPane
+        Label labelVolume  = new Label("Volume");
+        sliderPaneVol.addRow(0, labelVolume, volumeSlider);
+        Label labelTime  = new Label("Time");
+        sliderPaneTime.addRow(0, labelTime, timeSlider);
 
         // Create the Buttons
         Button playButton = new Button("Play");
@@ -135,8 +188,14 @@ public class JavaFX extends Application
             }
         });
 
+        // If we want to do stuff no fim
+        player.setOnEndOfMedia(() -> {
+            System.out.println("end of media");
+            System.out.println(player.getStatus());
+        });
+
         // Create the HBox
-        HBox controlBox = new HBox(5, playButton, pauseButton, stopButton,closeButton);
+        HBox controlBox = new HBox(5, sliderPaneVol, playButton, pauseButton, stopButton,closeButton, sliderPaneTime);
         controlBox.setAlignment(Pos.BASELINE_CENTER);
 
         // Create the VBox

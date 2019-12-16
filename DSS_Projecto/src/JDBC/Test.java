@@ -14,7 +14,7 @@ public class Test {
             //Classe nao disponivel
         }
 
-        public Utilizador get(Object key){
+        /*public Utilizador get(Object key){
             try (Connection con = DriverManager.getConnection("jdbc:mysql ://localhost/ DBmodel?user = un&password = pwd ") {
 
             }
@@ -22,6 +22,6 @@ public class Test {
                 // Erro ao establecer ligaçao
             }
 
-        }
+        }*/
     }
 }

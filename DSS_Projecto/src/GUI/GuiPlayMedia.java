@@ -27,7 +27,7 @@ class GuiPlayMedia extends JFrame {
         this.setTitle("Reproduzir Conteudo");
 
         //Labels
-        conteudoCurrentUser = new JList<>(ctrl.getCurrentUserMedia())
+        conteudoCurrentUser = new JList<>(ctrl.getCurrentUserMedia());
         bAlterarCategoria = new JButton("Alterar Categoria");
         bUpload = new JButton("Carregar Conteudo");
         bPlayMedia = new JButton("Reproduzir Conteudo");

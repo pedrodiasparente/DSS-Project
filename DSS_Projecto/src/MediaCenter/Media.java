@@ -2,12 +2,19 @@ package MediaCenter;
 
 public class Media {
 
-    private double duracao;
+    private int duracao;
     private String categoria;
     private String artista;
     private String nome;
 
-    public Double getDuracao(){
+    public Media(int duracao, String categoria, String artista, String nome){
+        this.duracao = duracao;
+        this.categoria = categoria;
+        this.artista = artista;
+        this.nome = nome;
+    }
+
+    public int getDuracao(){
         return this.duracao;
     }
 
@@ -19,7 +26,7 @@ public class Media {
         return artista;
     }
 
-    public String getMediaNome(){
+    public String getNome(){
         return this.nome;
     }
 
@@ -36,6 +43,6 @@ public class Media {
 
         Media m = (Media) media;
 
-        return(this.duracao == m.getDuracao() && this.categoria.equals(m.getCategoria()) && this.artista.equals(m.getArtista()) && this.nome.equals(m.getMediaNome()));
+        return(this.duracao == m.getDuracao() && this.categoria.equals(m.getCategoria()) && this.artista.equals(m.getArtista()) && this.nome.equals(m.getNome()));
     }
 }

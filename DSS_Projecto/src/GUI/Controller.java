@@ -72,7 +72,9 @@ public class Controller {
         this.showLogin();
     }
 
-    
+    public String[] getCurrentUserMedia(){
+        return mediaCenter.getCurrentUserMedia();
+    }
 
     public void dispose(){
         for(JFrame f : frames){

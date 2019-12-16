@@ -98,6 +98,12 @@ public class MediaCenter {
         return false;
     }
 
+    public String[] getCurrentUserMedia(){
+        String [] musica = {"potionseller.mp4", "heydarren.mp4"};
+        currentUser.getBiblioteca().getUserMedia(currentUser);
+        return musica;
+    }
+
     public void addConteudoGeral (Media m){
         this.bibliotecaGeral.getMedia().put(m.getMediaNome(), m);
     }

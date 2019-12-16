@@ -1,18 +1,19 @@
 package MediaCenter;
 
-import JDBC.Test;
+
+import JDBC.UtilizadorDAO;
 
 import java.util.HashMap;
 
 public class MediaCenter {
 
-    private Test utilizadores;
+    private UtilizadorDAO utilizadores;
     private Biblioteca bibliotecaGeral;
     private Utilizador admin;
     private Utilizador currentUser;
 
     public MediaCenter(){
-        utilizadores = Test.getInstance();
+        utilizadores = UtilizadorDAO.getInstance();
 
     }
 

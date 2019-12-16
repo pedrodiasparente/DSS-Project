@@ -2,6 +2,7 @@ package GUI;
 
 import GUI.Controller;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,9 +10,10 @@ import java.io.IOException;
 
 import java.awt.*;
 import java.awt.event.*;
-class Gui extends Frame {
-    TextField name,pass;
-    Button b1,b2;
+class Gui extends JFrame {
+    JTextField name;
+    JPasswordField pass;
+    JButton b1,b2;
     Controller ctrl;
 
     Gui(Controller controller) {
@@ -25,26 +27,22 @@ class Gui extends Frame {
         this.setLayout(null);
         Label n=new Label("Name:",Label.CENTER);
         Label p=new Label("password:",Label.CENTER);
-        name=new TextField(20);
-        pass=new TextField(20);
+        name=new JTextField(20);
+        pass=new JPasswordField(20);
         pass.setEchoChar('#');
-        b1=new Button("submit");
-        b1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(b1.getLabel().equals("submit"))
-                    ctrl.showLogin();
-                else
-                    b1.setLabel("submit");
-            }
+        b1=new JButton("submit");
+        b1.addActionListener(e -> {
+            if(b1.getText().equals("submit"))
+                ctrl.showLogin();
+            else
+                b1.setText("submit");
         });
-        b2=new Button("cancel");
-        b2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(b2.getLabel().equals("cancel"))
-                    b2.setLabel("click me again");
-                else
-                    b2.setLabel("cancel");
-            }
+        b2=new JButton("cancel");
+        b2.addActionListener(e -> {
+            if(b2.getText().equals("cancel"))
+                b2.setText("click me again");
+            else
+                b2.setText("cancel");
         });
         this.setSize(400,400);
         this.add(n);

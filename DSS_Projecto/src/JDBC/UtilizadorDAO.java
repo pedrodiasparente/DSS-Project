@@ -27,11 +27,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.sql.*;
 
-public class Test implements Map<String,Utilizador> {
+public class UtilizadorDAO implements Map<String,Utilizador> {
 
-    private static Test inst = null;
+    private static UtilizadorDAO inst = null;
 
-      private Test () {
+      private UtilizadorDAO () {
         try {
            Class.forName("com.mysql.jdbc.Driver");
         }
@@ -40,9 +40,9 @@ public class Test implements Map<String,Utilizador> {
         }
     }
 
-    public static Test getInstance() {
+    public static UtilizadorDAO getInstance() {
         if (inst == null) {
-            inst = new Test();
+            inst = new UtilizadorDAO();
         }
         return inst;
     }

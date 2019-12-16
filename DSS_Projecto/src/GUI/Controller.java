@@ -2,12 +2,13 @@ package GUI;
 
 import MediaCenter.MediaCenter;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Controller {
     MediaCenter mediaCenter;
-    private ArrayList<Frame> frames;
+    private ArrayList<JFrame> frames;
     private static final int LOGIN = 0;
     private static final int MAIN_MENU = 1;
     private static final int REPRODUZIR_CONTEUDO = 2;
@@ -28,36 +29,35 @@ public class Controller {
     }
 
     public void showLogin(){
-        for(Frame f : frames){
+        for(JFrame f : frames){
             f.setVisible(false);
         }
         frames.get(LOGIN).setVisible(true);
     }
 
     public void showMainMenu(){
-        for(Frame f : frames){
+        for(JFrame f : frames){
             f.setVisible(false);
         }
-        System.out.println("showing menu");
         frames.get(MAIN_MENU).setVisible(true);
     }
 
     public void showReproduzirConteudo(){
-        for(Frame f : frames){
+        for(JFrame f : frames){
             f.setVisible(false);
         }
         frames.get(REPRODUZIR_CONTEUDO).setVisible(true);
     }
 
     public void showUploadConteudo(){
-        for(Frame f : frames){
+        for(JFrame f : frames){
             f.setVisible(false);
         }
         frames.get(UPLOAD_CONTEUDO).setVisible(true);
     }
 
     public void showAlterarCategoria(){
-        for(Frame f : frames){
+        for(JFrame f : frames){
             f.setVisible(false);
         }
         frames.get(ALTERAR_CATEGORIA).setVisible(true);
@@ -72,8 +72,10 @@ public class Controller {
         this.showLogin();
     }
 
+    
+
     public void dispose(){
-        for(Frame f : frames){
+        for(JFrame f : frames){
             f.dispose();
         }
     }

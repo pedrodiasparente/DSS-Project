@@ -2,15 +2,17 @@ package GUI;
 
 import GUI.Controller;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-class GuiLogin extends Frame {
-    TextField name,pass;
-    Button b1,b2;
+class GuiLogin extends JFrame {
+    JTextField name;
+    JPasswordField pass;
+    JButton b1,b2;
     Controller ctrl;
 
     GuiLogin(Controller controller) {
@@ -24,10 +26,10 @@ class GuiLogin extends Frame {
         this.setLayout(null);
         Label n=new Label("Name:",Label.CENTER);
         Label p=new Label("password:",Label.CENTER);
-        name=new TextField(20);
-        pass=new TextField(20);
+        name=new JTextField(20);
+        pass=new JPasswordField(20);
         pass.setEchoChar('#');
-        b1=new Button("submit");
+        b1=new JButton("submit");
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.login(name.getText(), pass.getText());
@@ -44,7 +46,7 @@ class GuiLogin extends Frame {
         name.setBounds(200,100,90,20);
         pass.setBounds(200,140,90,20);
         b1.setBounds(100,260,70,40);
-        this.setTitle("B");
+        this.setTitle("Login");
 
     }
     public static void main(String args[])

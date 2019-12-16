@@ -17,7 +17,7 @@ class GuiLogin extends Frame {
         ctrl = controller;
         addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e) {
-                dispose();
+                ctrl.dispose();
             }
         });
         setLayout(new FlowLayout());

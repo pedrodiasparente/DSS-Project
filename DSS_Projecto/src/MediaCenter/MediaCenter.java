@@ -1,25 +1,33 @@
 package MediaCenter;
 
+import JDBC.Test;
+
 import java.util.HashMap;
 
 public class MediaCenter {
 
-    private HashMap<String, Utilizador> utilizadores;
+    private Test utilizadores;
     private Biblioteca bibliotecaGeral;
     private Utilizador admin;
     private Utilizador currentUser;
+
+    public MediaCenter(){
+        utilizadores = Test.getInstance();
+
+    }
 
     public int login(String email) {
         if (validaUtilizador(email) != null) {
             this.currentUser = validaUtilizador(email);
             return 1;
         }
+        System.out.println("No existo");
         return 0;
     }
 
     public Utilizador validaUtilizador(String email) {
         for (Utilizador u : this.utilizadores.values()) {
-            String m = u.getUtilizadorMail();
+            String m = u.getEmail();
             if (m == email) {
                 return u;
             }
@@ -34,7 +42,7 @@ public class MediaCenter {
     public boolean validaDados(String email) {
         boolean v = false;
         for (Utilizador u : this.utilizadores.values()) {
-            String m = u.getUtilizadorMail();
+            String m = u.getEmail();
             if (m == email) {
                 v = true;
                 break;

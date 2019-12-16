@@ -1,6 +1,8 @@
 package GUI;
 
 import java.io.File;
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.event.ActionEvent;
@@ -39,8 +41,16 @@ public class JavaFX extends Application
     @Override
     public void start(Stage stage) throws Exception {
 
+        Parameters parameters = getParameters();
+        List<String> rawArguments = parameters.getRaw();
+
+        System.out.println("\nrawArguments -");
+        for(String raw : rawArguments) {
+            System.out.println(raw);
+        }
+
         //goes to user Directory
-        File f = new File(Dir, "heydarren.mp4");
+        File f = new File(Dir, rawArguments.get(0));
 
 
         //Converts media to string URL

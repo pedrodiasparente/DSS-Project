@@ -16,16 +16,16 @@ public class Controller {
     private static final int ALTERAR_CATEGORIA = 4;
 
     public Controller(){
+        mediaCenter = new MediaCenter();
         frames = new ArrayList<>(5);
         for(int i = 0; i < 5; i++){
             frames.add(null);
         }
         frames.set(LOGIN, new GuiLogin(this));
         frames.set(MAIN_MENU, new GuiMainMenu(this));
-        frames.set(REPRODUZIR_CONTEUDO, new Gui(this));
+        frames.set(REPRODUZIR_CONTEUDO, new GuiPlayMedia(this));
         frames.set(UPLOAD_CONTEUDO, new Gui(this));
         frames.set(ALTERAR_CATEGORIA, new Gui(this));
-        mediaCenter = new MediaCenter();
     }
 
     public void showLogin(){
@@ -76,9 +76,18 @@ public class Controller {
         return mediaCenter.getCurrentUserMedia();
     }
 
+    public String[] getMediaGlobal(){
+        return mediaCenter.getMediaGlobal();
+    }
+
+
     public void dispose(){
         for(JFrame f : frames){
             f.dispose();
         }
+    }
+
+    public void reproduzirConteudo(String[] media){
+        //
     }
 }

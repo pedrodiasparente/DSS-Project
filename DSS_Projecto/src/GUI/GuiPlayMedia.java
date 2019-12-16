@@ -4,14 +4,14 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 class GuiPlayMedia extends JFrame {
-    private JButton bAlterarCategoria, bUpload, bPlayMedia, bLogout;
-    private JList conteudoCurrentUser, conteudoGlobal;
+    private JButton bAddMedia2, bAddMedia1, bPlayMedia;
+    private JList<String> conteudoCurrentUser;
+    private JList<String> conteudoGlobal;
+    private JList<String> conteudoToPlay;
     private Controller ctrl;
 
     public GuiPlayMedia(Controller controller) {
@@ -25,30 +25,50 @@ class GuiPlayMedia extends JFrame {
         this.setLayout(null);
         this.setSize(400,400);
         this.setTitle("Reproduzir Conteudo");
+        DefaultListModel<String> toPlay = new DefaultListModel<>();
 
         //Labels
         conteudoCurrentUser = new JList<>(ctrl.getCurrentUserMedia());
-        bAlterarCategoria = new JButton("Alterar Categoria");
-        bUpload = new JButton("Carregar Conteudo");
-        bPlayMedia = new JButton("Reproduzir Conteudo");
-        bLogout = new JButton("Terminar Sessão");
+        conteudoGlobal = new JList<>(ctrl.getMediaGlobal());
+        conteudoToPlay = new JList<>(toPlay);
+        bPlayMedia = new JButton("Play");
+        bAddMedia1 = new JButton("Add");
+        bAddMedia2 = new JButton("Add");
 
         //Adicionar funcionalidade aos botões
-        bAlterarCategoria.addActionListener(e -> ctrl.showAlterarCategoria());
-        bUpload.addActionListener(e -> ctrl.showUploadConteudo());
-        bPlayMedia.addActionListener(e -> ctrl.showReproduzirConteudo());
-        bLogout.addActionListener(e -> ctrl.logout());
+        bAddMedia1.addActionListener(e -> toPlay.addElement(conteudoGlobal.getSelectedValue()));
+        bAddMedia2.addActionListener(e -> toPlay.addElement(conteudoCurrentUser.getSelectedValue()));
+        bPlayMedia.addActionListener(e -> {
+            String[] musicas = {};
+            for(int i = 0; i < toPlay.size(); i++){
+                musicas[i] = (toPlay.get(i));
+            }
+            ctrl.reproduzirConteudo(musicas);
+        });
 
         //Posicionar Botões
-        bAlterarCategoria.setBounds(50,30,300,40);
-        bUpload.setBounds(50,90,300,40);
-        bPlayMedia.setBounds(50,150,300,40);
-        bLogout.setBounds(50,210,300,40);
+        bPlayMedia.setBounds(290,300,90,40);
+        bAddMedia1.setBounds(20,300,90,40);
+        bAddMedia2.setBounds(120,300,90,40);
 
-        //Adicionar Botões
-        this.add(bAlterarCategoria);
-        this.add(bUpload);
+        JScrollPane scrollGlobal = new JScrollPane();
+        scrollGlobal.setViewportView(conteudoGlobal);
+        scrollGlobal.setBounds(20,30,90,250);
+
+        JScrollPane scrollCurrentUser = new JScrollPane();
+        scrollCurrentUser.setViewportView(conteudoCurrentUser);
+        scrollCurrentUser.setBounds(120,30,90,250);
+
+        JScrollPane scrollToPlay = new JScrollPane();
+        scrollToPlay.setViewportView(conteudoToPlay);
+        scrollToPlay.setBounds(290,30,90,250);
+
+        //Adicionar à janela
+        this.add(scrollCurrentUser);
+        this.add(scrollGlobal);
+        this.add(scrollToPlay);
+        this.add(bAddMedia1);
+        this.add(bAddMedia2);
         this.add(bPlayMedia);
-        this.add(bLogout);
     }
 }

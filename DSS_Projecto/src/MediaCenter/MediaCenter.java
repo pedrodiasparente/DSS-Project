@@ -14,7 +14,9 @@ public class MediaCenter {
 
     public MediaCenter(){
         utilizadores = UtilizadorDAO.getInstance();
-
+        bibliotecaGeral = new Biblioteca();
+        admin = new Utilizador("admin", "admin", "admin");
+        currentUser = null;
     }
 
     public int login(String email) {
@@ -71,7 +73,7 @@ public class MediaCenter {
 
 		 */
         for (Media m : currentUser.getBiblioteca().getMedia().values()) {
-            if (m.getMediaNome() == nome) {
+            if (m.getNome() == nome) {
                 m.setMediaCategoria(categoria);
                 res = 1;
             }
@@ -100,16 +102,25 @@ public class MediaCenter {
 
     public String[] getCurrentUserMedia(){
         String [] musica = {"potionseller.mp4", "heydarren.mp4"};
-        currentUser.getBiblioteca().getUserMedia(currentUser);
+        //currentUser.getBiblioteca().getUserMedia(currentUser);
+        return musica;
+    }
+
+    public String[] getMediaGlobal(){
+        String [] musica = {"potionseller.mp4", "heydarren.mp4","0-100 nigga real quick"};
+        /*String [] musicaReal = {};
+        for(Media m : this.bibliotecaGeral.getMedia().values()){
+            musicaReal[musica.length] = m.getNome();
+        }*/
         return musica;
     }
 
     public void addConteudoGeral (Media m){
-        this.bibliotecaGeral.getMedia().put(m.getMediaNome(), m);
+        this.bibliotecaGeral.getMedia().put(m.getNome(), m);
     }
 
     public void addConteudoPessoal (Media m){
-        this.currentUser.getBiblioteca().getMedia().put(m.getMediaNome(), m);
+        this.currentUser.getBiblioteca().getMedia().put(m.getNome(), m);
     }
 
     public int carregarConteudo(HashMap<String, Media> conteudo) {

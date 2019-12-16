@@ -26,22 +26,24 @@ import java.util.*;
  * @version 20191202
  */
 
-public class MediaDAO implements Map<String,Media> {
+public class MediaUtilizadorDAO implements Map<String,Media> {
 
-    private static MediaDAO inst = null;
+    private static MediaUtilizadorDAO inst = null;
+    private Utilizador currentUser;
 
-      private MediaDAO() {
+      private MediaUtilizadorDAO(Utilizador currentUser) {
         try {
            Class.forName("com.mysql.jdbc.Driver");
         }
         catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
         }
+        this.currentUser = currentUser;
     }
 
-    public static MediaDAO getInstance() {
+    public static MediaUtilizadorDAO getInstance(Utilizador currentUser) {
         if (inst == null) {
-            inst = new MediaDAO();
+            inst = new MediaUtilizadorDAO(currentUser);
         }
         return inst;
     }
@@ -149,25 +151,11 @@ public class MediaDAO implements Map<String,Media> {
     public Collection<Media> values() {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=password")) {
             Collection<Media> col = new HashSet<Media>();
+            String userEmail = currentUser.getEmail();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM Media");
+            ResultSet rs = stm.executeQuery("select distinct u.email as Email_Utilizador, m.nome as Nome_Media from Utilizador u, UtilizadorMedia um, Media m where um.Media_nome = m.nome and um.Utilizador_email = u.email and u.email =  '" + userEmail + "'  order by u.email;");
             for (;rs.next();) {
                 col.add(new Media(rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(1)));
-            }
-
-            return col;
-        }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
-    }
-
-    public HashMap<String, Media> getUserMedia(Utilizador currentUser) {
-        String userEmail = currentUser.getEmail();
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=password")) {
-            HashMap<String, Media> col = new HashMap<String, Media>();
-            Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM Media");
-            for (;rs.next();) {
-                col.put(rs.getString(1), new Media(rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(1)));
             }
 
             return col;

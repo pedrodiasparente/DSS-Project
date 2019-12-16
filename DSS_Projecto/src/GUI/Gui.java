@@ -65,6 +65,6 @@ class Gui extends Frame {
     public static void main(String args[])
     {
         Controller controller = new Controller();
-        controller.showAlterarCategoria();;
+        controller.showMainMenu();;
     }
 }

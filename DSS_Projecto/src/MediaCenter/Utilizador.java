@@ -11,10 +11,17 @@ public class Utilizador {
         this.nome = nome;
         this.email = email;
         this.password = password;
+        this.biblioteca = new Biblioteca();
+    }
+    public String getNome(){
+        return this.nome;
+    }
+    public String getEmail(){
+        return this.email;
     }
 
-    public String getUtilizadorMail(){
-        return this.email;
+    public String getPassword(){
+        return this.password;
     }
 
     public Biblioteca getBiblioteca(){

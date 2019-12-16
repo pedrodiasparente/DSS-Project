@@ -20,10 +20,11 @@ public class Controller {
             frames.add(null);
         }
         frames.set(LOGIN, new GuiLogin(this));
-        frames.set(MAIN_MENU, new Gui(this));
+        frames.set(MAIN_MENU, new GuiMainMenu(this));
         frames.set(REPRODUZIR_CONTEUDO, new Gui(this));
         frames.set(UPLOAD_CONTEUDO, new Gui(this));
         frames.set(ALTERAR_CATEGORIA, new Gui(this));
+        mediaCenter = new MediaCenter();
     }
 
     public void showLogin(){
@@ -37,6 +38,7 @@ public class Controller {
         for(Frame f : frames){
             f.setVisible(false);
         }
+        System.out.println("showing menu");
         frames.get(MAIN_MENU).setVisible(true);
     }
 
@@ -65,4 +67,14 @@ public class Controller {
         mediaCenter.login(email);
     }
 
+    public void logout(){
+        mediaCenter.terminaSessao();
+        this.showLogin();
+    }
+
+    public void dispose(){
+        for(Frame f : frames){
+            f.dispose();
+        }
+    }
 }

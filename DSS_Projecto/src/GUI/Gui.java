@@ -39,10 +39,11 @@ class Gui extends JFrame {
         });
         b2=new JButton("cancel");
         b2.addActionListener(e -> {
-            if(b2.getText().equals("cancel"))
-                b2.setText("click me again");
-            else
-                b2.setText("cancel");
+            DefaultListModel<String> toPlay = new DefaultListModel<>();
+            String[] musicas = {};
+            for(int i = 0; i < toPlay.size(); i++){
+                musicas[i] = (toPlay.get(i));
+            }
         });
         this.setSize(400,400);
         this.add(n);

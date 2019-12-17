@@ -3,9 +3,10 @@ package GUI;
 
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 class GuiPlayMedia extends JFrame {
     private JButton bAddMedia2, bAddMedia1, bPlayMedia;
@@ -21,7 +22,6 @@ class GuiPlayMedia extends JFrame {
                 ctrl.dispose();
             }
         });
-        setLayout(new FlowLayout());
         this.setLayout(null);
         this.setSize(400,400);
         this.setTitle("Reproduzir Conteudo");
@@ -39,11 +39,11 @@ class GuiPlayMedia extends JFrame {
         bAddMedia1.addActionListener(e -> toPlay.addElement(conteudoGlobal.getSelectedValue()));
         bAddMedia2.addActionListener(e -> toPlay.addElement(conteudoCurrentUser.getSelectedValue()));
         bPlayMedia.addActionListener(e -> {
-            String[] musicas = {};
+            ArrayList<String> musicas = new ArrayList<>();
             for(int i = 0; i < toPlay.size(); i++){
-                musicas[i] = (toPlay.get(i));
+                musicas.add(toPlay.get(i));
             }
-            ctrl.reproduzirConteudo(musicas);
+            ctrl.reproduzirConteudo(musicas.toArray(new String[0]));
         });
 
         //Posicionar Botões

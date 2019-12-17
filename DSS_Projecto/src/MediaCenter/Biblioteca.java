@@ -20,7 +20,10 @@ public class Biblioteca {
     }
 
     public HashMap<String, Media> getUserMedia(Utilizador currentUser){
-        media.getUserMedia(currentUser);
-        return null;
+        HashMap<String, Media> mediaUser = new HashMap<>();
+        for(Media m : media.values()){
+            mediaUser.put(m.getNome(),m);
+        }
+        return mediaUser;
     }
 }

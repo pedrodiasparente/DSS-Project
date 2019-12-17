@@ -25,7 +25,7 @@ public class Controller {
         frames.set(MAIN_MENU, new GuiMainMenu(this));
         frames.set(REPRODUZIR_CONTEUDO, new GuiPlayMedia(this));
         frames.set(UPLOAD_CONTEUDO, new Gui(this));
-        frames.set(ALTERAR_CATEGORIA, new Gui(this));
+        frames.set(ALTERAR_CATEGORIA, new GuiAlterarCategoria(this));
     }
 
     public void showLogin(){

@@ -3,9 +3,7 @@ package GUI;
 import GUI.Controller;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -22,19 +20,14 @@ class GuiLogin extends JFrame {
                 ctrl.dispose();
             }
         });
-        setLayout(new FlowLayout());
         this.setLayout(null);
-        Label n=new Label("Name:",Label.CENTER);
-        Label p=new Label("password:",Label.CENTER);
+        JLabel n=new JLabel("Name:",JLabel.CENTER);
+        JLabel p=new JLabel("password:",JLabel.CENTER);
         name=new JTextField(20);
         pass=new JPasswordField(20);
         pass.setEchoChar('#');
         b1=new JButton("submit");
-        b1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                controller.login(name.getText(), pass.getText());
-            }
-        });
+        b1.addActionListener(e -> controller.login(name.getText(), pass.getText()));
         this.setSize(400,400);
         this.add(n);
         this.add(name);
@@ -47,10 +40,6 @@ class GuiLogin extends JFrame {
         pass.setBounds(200,140,90,20);
         b1.setBounds(100,260,70,40);
         this.setTitle("Login");
-
-    }
-    public static void main(String args[])
-    {
 
     }
 }

@@ -79,7 +79,7 @@ public class MediaUtilizadorDAO implements Map<String,Media> {
     }
 
     public Media get(Object key) {
-        try (Connection conn = DriverManager.getConnection("\"jdbc:mysql://localhost/MediaCenter?user=root&password=password\"")) {
+        try (Connection conn = DriverManager.getConnection("\"jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23\"")) {
             Media media = null;
             Statement stm = conn.createStatement();
             String sql = "SELECT * FROM Media WHERE nome='"+(String)key+"'";
@@ -111,12 +111,10 @@ public class MediaUtilizadorDAO implements Map<String,Media> {
     /* Exercício: Alterar para utilizar transacções! */
     public Media put(String key, Media value) {
         try (Connection conn = DriverManager.getConnection("jdbc:odbc:alunos")) {
-            Media al = null;
             Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM TAlunos WHERE numero='"+key+"'");
-            String sql = "INSERT INTO TAlunos VALUES ('"+ "jhonny" +"','"+key+"',";
-            sql += 20 +","+ 10 +")";
-            int i  = stm.executeUpdate(sql);
+            stm.executeUpdate("INSERT INTO Media (nome, duracao, categoriaDefault, artista) VALUES (" + value.getNome() + ", " + value.getDuracao() + ", " + value.getCategoria() +", " + value.getArtista() + ");");
+            String sql = "INSERT INTO UtilizadorMedia (Utilizador_email, Media_nome, categoria) VALUES ("+ currentUser.getEmail() +","+ key +"," + value.getCategoria() + ");";
+            stm.executeUpdate(sql);
             return new Media(value.getDuracao(),value.getCategoria(),value.getArtista(), value.getNome());
         }
         catch (Exception e) {throw new NullPointerException(e.getMessage());}

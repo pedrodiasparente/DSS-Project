@@ -7,18 +7,19 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Controller {
-    MediaCenter mediaCenter;
+    private MediaCenter mediaCenter;
     private ArrayList<JFrame> frames;
     private static final int LOGIN = 0;
     private static final int MAIN_MENU = 1;
     private static final int REPRODUZIR_CONTEUDO = 2;
     private static final int UPLOAD_CONTEUDO = 3;
     private static final int ALTERAR_CATEGORIA = 4;
+    private static final int PLAYER = 5;
 
     public Controller(){
         mediaCenter = new MediaCenter();
-        frames = new ArrayList<>(5);
-        for(int i = 0; i < 5; i++){
+        frames = new ArrayList<>(6);
+        for(int i = 0; i < 6; i++){
             frames.add(null);
         }
         frames.set(LOGIN, new GuiLogin(this));
@@ -26,6 +27,7 @@ public class Controller {
         frames.set(REPRODUZIR_CONTEUDO, new GuiPlayMedia(this));
         frames.set(UPLOAD_CONTEUDO, new Gui(this));
         frames.set(ALTERAR_CATEGORIA, new GuiAlterarCategoria(this));
+        frames.set(PLAYER, new GuiFX(this));
     }
 
     public void showLogin(){
@@ -63,6 +65,18 @@ public class Controller {
         frames.get(ALTERAR_CATEGORIA).setVisible(true);
     }
 
+    public void showPlayer(String musica){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                GuiFX fx = (GuiFX) frames.get(PLAYER);
+                fx.setMusica(musica);
+                fx.setVisible(true);
+                //browser.loadURL("http://oracle.com");
+            }
+        });
+    }
+
     public void login(String email, String password){
         mediaCenter.login(email);
     }
@@ -87,7 +101,7 @@ public class Controller {
         }
     }
 
-    public void reproduzirConteudo(String[] media){
-        //
+    public void reproduzirConteudo(String[] media) {
+
     }
 }

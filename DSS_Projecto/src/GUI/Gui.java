@@ -64,6 +64,6 @@ class Gui extends JFrame {
     public static void main(String args[])
     {
         Controller controller = new Controller();
-        controller.showMainMenu();;
+        controller.showMainMenu();
     }
 }

@@ -43,7 +43,7 @@ class GuiPlayMedia extends JFrame {
             for(int i = 0; i < toPlay.size(); i++){
                 musicas.add(toPlay.get(i));
             }
-            ctrl.reproduzirConteudo(musicas.toArray(new String[0]));
+            ctrl.showPlayer(musicas.toArray(new String[0])[0]);
         });
 
         //Posicionar Botões

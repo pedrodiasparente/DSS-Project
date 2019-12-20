@@ -101,13 +101,13 @@ public class MediaCenter {
     }
 
     public String[] getCurrentUserMedia(){
-        String [] musica = {"potionseller.mp4", "heydarren.mp4"};
+        String [] musica = {"PotionSeller.mp4", "heydarren.mp4"};
         //currentUser.getBiblioteca().getUserMedia(currentUser);
         return musica;
     }
 
     public String[] getMediaGlobal(){
-        String [] musica = {"potionseller.mp4", "heydarren.mp4","0-100 nigga real quick"};
+        String [] musica = {"PotionSeller.mp4", "heydarren.mp4","0-100 nigga real quick"};
         /*String [] musicaReal = {};
         for(Media m : this.bibliotecaGeral.getMedia().values()){
             musicaReal[musica.length] = m.getNome();

@@ -29,11 +29,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class JavaFX extends Application
+public class Player extends Application
 {
     // Create the Area for Logging
     private TextArea messageArea = new TextArea();
     private String Dir = System.getProperty("user.dir");
+    private static Controller ctrl;
+
     public static void main(String[] args) throws Exception{
         launch(args);
     }
@@ -225,6 +227,8 @@ public class JavaFX extends Application
         // If we want to do stuff no fim
         player.setOnEndOfMedia(() -> {
             System.out.println("end of media");
+            stage.close();
+            ctrl.showReproduzirConteudo();
         });
     }
 
@@ -233,5 +237,13 @@ public class JavaFX extends Application
         MediaException.Type errorType = error.getType();
         String errorMessage = error.getMessage();
         messageArea.appendText("\n" + "Type:" + errorType + ", error mesage:" + errorMessage);
+    }
+
+    public static Controller getController() {
+        return ctrl;
+    }
+
+    public static void setController(Controller controller) {
+        Player.ctrl = controller;
     }
 }

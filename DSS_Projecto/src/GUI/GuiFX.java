@@ -58,7 +58,7 @@ public class GuiFX extends JFrame {
     }
 
     private void initComponents() {
-        createScene();
+        //createScene();
 
         ActionListener al = new ActionListener() {
             @Override
@@ -77,7 +77,7 @@ public class GuiFX extends JFrame {
         pack();
     }
 
-    private void createScene() {
+    void createScene() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

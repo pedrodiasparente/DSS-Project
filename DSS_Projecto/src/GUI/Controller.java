@@ -71,6 +71,7 @@ public class Controller {
             public void run() {
                 GuiFX fx = (GuiFX) frames.get(PLAYER);
                 fx.setMusica(musica);
+                fx.createScene();
                 fx.setVisible(true);
                 //browser.loadURL("http://oracle.com");
             }

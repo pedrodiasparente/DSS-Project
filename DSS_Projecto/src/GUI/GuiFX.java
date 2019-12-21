@@ -101,7 +101,7 @@ public class GuiFX extends JFrame {
                 // Create a MediaCenter.Media Player
                 final MediaPlayer player = new MediaPlayer(media);
                 // Automatically begin the playback
-                player.setAutoPlay(false);
+                player.setAutoPlay(true);
 
                 //change width and height to fit video
                 final MediaView mediaView = new MediaView(player);
@@ -203,6 +203,8 @@ public class GuiFX extends JFrame {
 
                     closeButton.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
                         public void handle(javafx.event.ActionEvent event) {
+                            player.pause();
+                            player.seek(player.getStopTime());
                             ctrl.showReproduzirConteudo();
                         }
                     });

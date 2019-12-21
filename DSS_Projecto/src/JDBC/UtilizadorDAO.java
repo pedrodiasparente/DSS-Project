@@ -148,7 +148,7 @@ public class UtilizadorDAO implements Map<String,Utilizador> {
     }
 
     public Collection<Utilizador> values() {
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=password")) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23")) {
             Collection<Utilizador> col = new HashSet<Utilizador>();
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM Utilizador");

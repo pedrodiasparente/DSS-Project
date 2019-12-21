@@ -3,6 +3,8 @@ package MediaCenter;
 
 import JDBC.UtilizadorDAO;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class MediaCenter {
@@ -11,6 +13,7 @@ public class MediaCenter {
     private Biblioteca bibliotecaGeral;
     private Utilizador admin;
     private Utilizador currentUser;
+    private ArrayList<String> toPlay;
 
     public MediaCenter(){
         utilizadores = UtilizadorDAO.getInstance();
@@ -141,4 +144,21 @@ public class MediaCenter {
         }
         return res;
     }
+
+    //play media operations
+    public void setPlayer(String[] musicas){
+        toPlay = new ArrayList<String>();
+        Collections.addAll(toPlay, musicas);
+    }
+
+    public String nextMedia(){
+        String nextMedia;
+        if(toPlay.size() > 0){
+            nextMedia = toPlay.get(0);
+            toPlay.remove(0);
+            return nextMedia;
+        }
+        return null;
+    }
+
 }

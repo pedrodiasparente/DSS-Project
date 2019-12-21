@@ -1,6 +1,7 @@
 package GUI;
 
 import GUI.Controller;
+import javafx.application.Platform;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,6 +64,7 @@ class Gui extends JFrame {
     }
     public static void main(String args[])
     {
+
         Controller controller = new Controller();
         controller.showMainMenu();
     }

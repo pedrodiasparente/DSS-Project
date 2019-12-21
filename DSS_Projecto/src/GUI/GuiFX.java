@@ -58,16 +58,6 @@ public class GuiFX extends JFrame {
     }
 
     private void initComponents() {
-        //createScene();
-
-        ActionListener al = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadURL(txtURL.getText());
-            }
-        };
-
-        btnGo.addActionListener(al);
 
         panel.add(jfxPanel, BorderLayout.CENTER);
 
@@ -82,9 +72,9 @@ public class GuiFX extends JFrame {
             @Override
             public void run() {
 
-                while (musica == null) {
-                System.out.println(musica);
-            }
+                if (musica == null) {
+                    return;
+                }
 
                 //goes to user Directory
                 File f = new File(Dir, musica);
@@ -228,44 +218,10 @@ public class GuiFX extends JFrame {
                 // If we want to do stuff no fim
                 player.setOnEndOfMedia(() -> {
                     System.out.println("end of media");
-                    ctrl.showReproduzirConteudo();
+                    if(!ctrl.reproduzirConteudo())
+                        ctrl.showReproduzirConteudo();
                 });
             }
         });
     }
-
-    public void loadURL(final String url) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                String tmp = toURL(url);
-
-                if (tmp == null) {
-                    tmp = toURL("http://" + url);
-                }
-
-                //engine.load(tmp);
-            }
-        });
-    }
-
-    private static String toURL(String str) {
-        try {
-            return new URL(str).toExternalForm();
-        } catch (MalformedURLException exception) {
-            return null;
-        }
-    }
-
-    /*public static void main(String[] args) {
-        Controller ctrl = new Controller();
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                GuiFX browser = new GuiFX(ctrl);
-                browser.setVisible(true);
-                //browser.loadURL("http://oracle.com");
-            }
-        });
-    }*/
 }

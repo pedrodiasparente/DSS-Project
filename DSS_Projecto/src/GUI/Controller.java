@@ -65,17 +65,11 @@ public class Controller {
         frames.get(ALTERAR_CATEGORIA).setVisible(true);
     }
 
-    public void showPlayer(String musica){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                GuiFX fx = (GuiFX) frames.get(PLAYER);
-                fx.setMusica(musica);
-                fx.createScene();
-                fx.setVisible(true);
-                //browser.loadURL("http://oracle.com");
-            }
-        });
+    public void showPlayer(){
+        for(JFrame f : frames){
+            f.setVisible(false);
+        }
+        frames.get(PLAYER).setVisible(true);
     }
 
     public void login(String email, String password){
@@ -97,12 +91,29 @@ public class Controller {
 
 
     public void dispose(){
+        //GuiFX fx = (GuiFX) frames.get(PLAYER);
         for(JFrame f : frames){
             f.dispose();
         }
     }
 
-    public void reproduzirConteudo(String[] media) {
+    public void setPlayer(String[] musicas) {
+        mediaCenter.setPlayer(musicas);
+    }
 
+    public boolean reproduzirConteudo() {
+        String nextMedia = mediaCenter.nextMedia();
+        if(nextMedia != null) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    GuiFX fx = (GuiFX) frames.get(PLAYER);
+                    fx.setMusica(nextMedia);
+                    fx.createScene();
+                }
+            });
+            return true;
+        }
+        return false;
     }
 }

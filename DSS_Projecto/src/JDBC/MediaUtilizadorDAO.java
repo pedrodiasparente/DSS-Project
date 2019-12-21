@@ -110,9 +110,12 @@ public class MediaUtilizadorDAO implements Map<String,Media> {
 
     /* Exercício: Alterar para utilizar transacções! */
     public Media put(String key, Media value) {
-        try (Connection conn = DriverManager.getConnection("jdbc:odbc:alunos")) {
+        try (Connection conn = DriverManager.getConnection("\"jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23\"")) {
             Statement stm = conn.createStatement();
-            stm.executeUpdate("INSERT INTO Media (nome, duracao, categoriaDefault, artista) VALUES (" + value.getNome() + ", " + value.getDuracao() + ", " + value.getCategoria() +", " + value.getArtista() + ");");
+            stm.executeUpdate("INSERT INTO Media (nome, duracao, categoriaDefault, artista) VALUES (" + value.getNome() + ", " + value.getDuracao() + ", " + value.getCategoria() +", " + value.getArtista() + ") ON DUPLICATE KEY UPDATE" +
+                    "duracao = "+ value.getDuracao() +"," +
+                    "categoriaDefault = " + value.getCategoria() + "," +
+                    "artista = " + value.getArtista() + ";");
             String sql = "INSERT INTO UtilizadorMedia (Utilizador_email, Media_nome, categoria) VALUES ("+ currentUser.getEmail() +","+ key +"," + value.getCategoria() + ");";
             stm.executeUpdate(sql);
             return new Media(value.getDuracao(),value.getCategoria(),value.getArtista(), value.getNome());
@@ -147,7 +150,7 @@ public class MediaUtilizadorDAO implements Map<String,Media> {
     }
 
     public Collection<Media> values() {
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=password")) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23")) {
             Collection<Media> col = new HashSet<Media>();
             String userEmail = currentUser.getEmail();
             Statement stm = conn.createStatement();

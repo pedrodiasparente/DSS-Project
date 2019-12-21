@@ -1,15 +1,20 @@
 package JDBC;
 
+import MediaCenter.Media;
 import MediaCenter.Utilizador;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.*;
 
 /**
  * Exemplo de um DAO (para o acesso aos dados de Aluno).
  * Como forma de minimizar o impacto de alteração dos Diag de Sequência, o DAO assume
  * a API da estrutura de dados que substitui - neste caso vai substituir um Map de Aluno.
  * O DAO utiliza o padrão Singleton.
- *
+ * <p>
  * DISCLAIMER: Este código foi criado para discussão e edição durante as aulas práticas
  * de DSS, representando uma solução em construção. Como tal, não deverá ser visto como
  * uma solução canónica, ou mesmo acabada. É disponibilizado para auxiliar o processo de
@@ -21,55 +26,50 @@ import java.sql.*;
  * @version 20191202
  */
 
-import java.util.Map;
-import java.util.Set;
-import java.util.Collection;
-import java.util.HashSet;
-import java.sql.*;
+public class MediaDAO implements Map<String,Media> {
 
-public class UtilizadorDAO implements Map<String,Utilizador> {
+    private static MediaDAO inst = null;
 
-    private static UtilizadorDAO inst = null;
-
-      private UtilizadorDAO () {
+    private MediaDAO() {
         try {
-           Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
             throw new NullPointerException(e.getMessage());
         }
     }
 
-    public static UtilizadorDAO getInstance() {
+    public static MediaDAO getInstance() {
         if (inst == null) {
-            inst = new UtilizadorDAO();
+            inst = new MediaDAO();
         }
         return inst;
     }
 
-    public void clear () {
+    public void clear() {
         try (Connection conn = DriverManager.getConnection("jdbc:odbc:alunos")) {
             Statement stm = conn.createStatement();
             stm.executeUpdate("DELETE FROM TAlunos");
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
     }
 
     public boolean containsKey(Object key) throws NullPointerException {
         try (Connection conn = DriverManager.getConnection("jdbc:odbc:alunos")) {
             Statement stm = conn.createStatement();
-            String sql = "SELECT nome FROM TAlunos WHERE numero='"+(String)key+"'";
+            String sql = "SELECT nome FROM TAlunos WHERE numero='" + (String) key + "'";
             ResultSet rs = stm.executeQuery(sql);
             return rs.next();
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
     }
 
     public boolean containsValue(Object value) {
         throw new NullPointerException("public boolean containsValue(Object value) not implemented!");
     }
 
-    public Set<Map.Entry<String,Utilizador>> entrySet() {
+    public Set<Entry<String, Media>> entrySet() {
         throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
     }
 
@@ -77,17 +77,18 @@ public class UtilizadorDAO implements Map<String,Utilizador> {
         throw new NullPointerException("public boolean equals(Object o) not implemented!");
     }
 
-    public Utilizador get(Object key) {
+    public Media get(Object key) {
         try (Connection conn = DriverManager.getConnection("\"jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23\"")) {
-            Utilizador al = null;
+            Media media = null;
             Statement stm = conn.createStatement();
-            String sql = "select * from Utilizador where email = '" +(String)key+ "';";
+            String sql = "SELECT * FROM Media WHERE nome='" + (String) key + "';";
             ResultSet rs = stm.executeQuery(sql);
             if (rs.next())
-                al = new Utilizador(rs.getString(2),rs.getString(1),rs.getString(3));
-            return al;
+                media = new Media(rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(1));
+            return media;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
     }
 
     public int hashCode() {
@@ -99,38 +100,44 @@ public class UtilizadorDAO implements Map<String,Utilizador> {
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT nome FROM TAlunos");
             return !rs.next();
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
     }
 
     public Set<String> keySet() {
         throw new NullPointerException("Not implemented!");
     }
 
+
     /* Exercício: Alterar para utilizar transacções! */
-    public Utilizador put(String key, Utilizador value) {
-        try (Connection conn = DriverManager.getConnection("\"jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23\"")) {
-            Utilizador al = null;
-            Statement stm = conn.createStatement();
-            stm.executeUpdate("INSERT INTO MediaCenter.Utilizador (email, password, username) VALUES ('" + value.getEmail() + "', '" + value.getPassword() + "', '" + value.getNome() + "')");
-            return new Utilizador(value.getNome(),value.getEmail(),value.getPassword());
+    //   PUT NO MEDIA JÁ ESTÁ NO MEDIA UTILIZADOR DAO
+    public Media put(String key, Media value) {
+        try (Connection conn = DriverManager.getConnection("jdbc:odbc:alunos")) {
+            /*Statement stm = conn.createStatement();
+            stm.executeUpdate("INSERT INTO Media (nome, duracao, categoriaDefault, artista) VALUES (" + value.getNome() + ", " + value.getDuracao() + ", " + value.getCategoria() +", " + value.getArtista() + ");");
+            String sql = "INSERT INTO UtilizadorMedia (Utilizador_email, Media_nome, categoria) VALUES ("+ currentUser.getEmail() +","+ key +"," + value.getCategoria() + ");";
+            stm.executeUpdate(sql);
+            return new Media(value.getDuracao(),value.getCategoria(),value.getArtista(), value.getNome());*/
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
+        catch (Exception e) {/*throw new NullPointerException(e.getMessage());*/}
+        return new Media(value.getDuracao(),value.getCategoria(),value.getArtista(), value.getNome());
     }
 
-    public void putAll(Map<? extends String,? extends Utilizador> t) {
+    public void putAll(Map<? extends String, ? extends Media> t) {
         throw new NullPointerException("Not implemented!");
     }
 
-    public Utilizador remove(Object key) {
+    public Media remove(Object key) {
         try (Connection conn = DriverManager.getConnection("jdbc:odbc:alunos")) {
-            Utilizador al = this.get(key);
+            Media al = this.get(key);
             Statement stm = conn.createStatement();
-            String sql = "DELETE '"+key+"' FROM TAlunos";
-            int i  = stm.executeUpdate(sql);
+            String sql = "DELETE '" + key + "' FROM TAlunos";
+            int i = stm.executeUpdate(sql);
             return al;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
     }
 
     public int size() {
@@ -138,24 +145,25 @@ public class UtilizadorDAO implements Map<String,Utilizador> {
             int i = 0;
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT nome FROM TAlunos");
-            for (;rs.next();i++);
+            for (; rs.next(); i++) ;
             return i;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
     }
 
-    public Collection<Utilizador> values() {
+    public Collection<Media> values() {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23")) {
-            Collection<Utilizador> col = new HashSet<Utilizador>();
+            Collection<Media> col = new HashSet<Media>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM Utilizador");
-            for (;rs.next();) {
-                col.add(new Utilizador(rs.getString(1),rs.getString(2),rs.getString(3)));
+            ResultSet rs = stm.executeQuery("SELECT * FROM MEDIA");
+            for (; rs.next(); ) {
+                col.add(new Media(rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(1)));
             }
 
             return col;
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
     }
-
 }

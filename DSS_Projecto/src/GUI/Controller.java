@@ -1,5 +1,6 @@
 package GUI;
 
+import JDBC.Teste;
 import MediaCenter.MediaCenter;
 
 import javax.swing.*;
@@ -115,5 +116,10 @@ public class Controller {
             return true;
         }
         return false;
+    }
+
+    public void addUtilizadores(){
+        Teste teste = new Teste();
+        teste.addUtilizadores();
     }
 }

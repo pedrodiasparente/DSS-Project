@@ -110,7 +110,7 @@ public class MediaUtilizadorDAO implements Map<String,Media> {
 
     /* Exercício: Alterar para utilizar transacções! */
     public Media put(String key, Media value) {
-        try (Connection conn = DriverManager.getConnection("\"jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23\"")) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23")) {
             Statement stm = conn.createStatement();
             stm.executeUpdate("INSERT INTO Media (nome, duracao, categoriaDefault, artista) VALUES (" + value.getNome() + ", " + value.getDuracao() + ", " + value.getCategoria() +", " + value.getArtista() + ") ON DUPLICATE KEY UPDATE" +
                     "duracao = "+ value.getDuracao() +"," +

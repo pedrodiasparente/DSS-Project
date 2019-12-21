@@ -109,10 +109,12 @@ public class UtilizadorDAO implements Map<String,Utilizador> {
 
     /* Exercício: Alterar para utilizar transacções! */
     public Utilizador put(String key, Utilizador value) {
-        try (Connection conn = DriverManager.getConnection("\"jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23\"")) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23")) {
             Utilizador al = null;
             Statement stm = conn.createStatement();
-            stm.executeUpdate("INSERT INTO MediaCenter.Utilizador (email, password, username) VALUES ('" + value.getEmail() + "', '" + value.getPassword() + "', '" + value.getNome() + "')");
+            stm.executeUpdate("INSERT INTO MediaCenter.Utilizador (email, password, username) VALUES ('" + value.getEmail() + "', '" + value.getPassword() + "', '" + value.getNome() + "') ON DUPLICATE KEY UPDATE " +
+                    "password = '" + value.getPassword() + "' ," +
+                    "username = '" + value.getNome() + "' ;");
             return new Utilizador(value.getNome(),value.getEmail(),value.getPassword());
         }
         catch (Exception e) {throw new NullPointerException(e.getMessage());}
@@ -150,7 +152,7 @@ public class UtilizadorDAO implements Map<String,Utilizador> {
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM Utilizador");
             for (;rs.next();) {
-                col.add(new Utilizador(rs.getString(1),rs.getString(2),rs.getString(3)));
+                col.add(new Utilizador(rs.getString(3),rs.getString(1), rs.getString(2)));
             }
 
             return col;

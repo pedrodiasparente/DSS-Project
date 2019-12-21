@@ -27,7 +27,7 @@ class GuiLogin extends JFrame {
         pass=new JPasswordField(20);
         pass.setEchoChar('#');
         b1=new JButton("submit");
-        b1.addActionListener(e -> controller.login(name.getText(), pass.getText()));
+        b1.addActionListener(e -> ctrl.login(name.getText(), pass.getText()));
         this.setSize(400,400);
         this.add(n);
         this.add(name);

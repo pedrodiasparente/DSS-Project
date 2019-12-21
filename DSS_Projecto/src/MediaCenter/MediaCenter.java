@@ -34,7 +34,8 @@ public class MediaCenter {
     public Utilizador validaUtilizador(String email) {
         for (Utilizador u : this.utilizadores.values()) {
             String m = u.getEmail();
-            if (m == email) {
+
+            if (m.equals(email)) {
                 return u;
             }
         }

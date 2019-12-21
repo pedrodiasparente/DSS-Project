@@ -1,5 +1,6 @@
 package MediaCenter;
 
+import JDBC.MediaDAO;
 import JDBC.MediaUtilizadorDAO;
 
 import java.util.HashMap;
@@ -7,7 +8,17 @@ import java.util.HashMap;
 public class Biblioteca {
 
     private MediaUtilizadorDAO media;
+    private MediaDAO mediaDAO;
     private HashMap<String, Playlist> playlists;
+
+    public Biblioteca() {
+        mediaDAO = MediaDAO.getInstance();
+    }
+
+    public Biblioteca (Utilizador u){
+        media = MediaUtilizadorDAO.getInstance(u);
+
+    }
 
     public HashMap<String, Media> getMedia() {
         HashMap<String, Media> res = new HashMap<>();

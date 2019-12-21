@@ -31,6 +31,7 @@ class GuiAlterarCategoria extends JFrame {
 
         //Adicionar funcionalidade aos botões
         bPlayMedia.addActionListener(e -> {
+            ctrl.addUtilizadores();
             /*ArrayList<String> musicas = new ArrayList<>();
             for(int i = 0; i < toPlay.size(); i++){
                 musicas.add(toPlay.get(i));

@@ -179,7 +179,7 @@ public class GuiFX extends JFrame {
                     javafx.scene.control.Button closeButton = new Button("Close");
 
                     // Create the Event Handlers for the Button
-                    playButton.setOnAction(new EventHandler<>() {
+                    playButton.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
                         public void handle(javafx.event.ActionEvent event) {
                             if (player.getStatus() == MediaPlayer.Status.PLAYING) {
                                 //

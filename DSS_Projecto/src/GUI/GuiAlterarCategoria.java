@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 class GuiAlterarCategoria extends JFrame {
-    private JButton bPlayMedia;
+    private JButton bPlayMedia, bBack;
     private JList<String> conteudoCurrentUser;
     private  JTextField categoria;
     private Controller ctrl;
@@ -26,6 +26,7 @@ class GuiAlterarCategoria extends JFrame {
 
         //Labels
         bPlayMedia = new JButton("Play");
+        bBack = new JButton("Back");
         categoria = new JTextField(50);
 
         //Adicionar funcionalidade aos botões
@@ -38,9 +39,11 @@ class GuiAlterarCategoria extends JFrame {
             ctrl.reproduzirConteudo(musicas.toArray(new String[0]));*/
         });
 
+        bBack.addActionListener(e -> ctrl.showMainMenu());
+
         //Posicionar Botões
         bPlayMedia.setBounds(290,135,90,40);
-
+        bBack.setBounds(5,5,70,20);
         categoria.setBounds(130, 145, 140, 20);
 
         JScrollPane scrollCurrentUser = new JScrollPane();
@@ -51,6 +54,7 @@ class GuiAlterarCategoria extends JFrame {
         this.add(scrollCurrentUser);
         this.add(bPlayMedia);
         this.add(categoria);
+        this.add(bBack);
     }
 
     @Override

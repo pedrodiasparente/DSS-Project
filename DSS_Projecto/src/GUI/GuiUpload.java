@@ -6,7 +6,7 @@ import java.awt.event.WindowEvent;
 
 class GuiUpload extends JFrame {
     JTextField name, artista, categoria, duracao;
-    JButton b1,b2;
+    JButton b1,bBack;
     Controller ctrl;
 
     GuiUpload(Controller controller) {
@@ -28,8 +28,11 @@ class GuiUpload extends JFrame {
         categoria = new JTextField(20);
         duracao = new JTextField(20);
         b1=new JButton("Adicionar media");
+        bBack = new JButton("Back");
 
         b1.addActionListener(e -> ctrl.addMedia(name.getText(), artista.getText(), categoria.getText(), Integer.parseInt(duracao.getText())));
+        bBack.addActionListener(e -> ctrl.showMainMenu());
+
 
         n.setBounds(90,90,90,60);
         a.setBounds(90,110,90,60);
@@ -40,6 +43,7 @@ class GuiUpload extends JFrame {
         categoria.setBounds(220,150,90,20);
         duracao.setBounds(220,170,90,20);
         b1.setBounds(90,220,220,40);
+        bBack.setBounds(5,5,70,20);
 
         this.setSize(400,400);
         this.add(n);
@@ -51,6 +55,7 @@ class GuiUpload extends JFrame {
         this.add(categoria);
         this.add(duracao);
         this.add(b1);
+        this.add(bBack);
 
         this.setTitle("Login");
 

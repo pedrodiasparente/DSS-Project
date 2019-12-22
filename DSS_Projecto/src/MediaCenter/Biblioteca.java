@@ -22,7 +22,6 @@ public class Biblioteca {
     public HashMap<String, Media> getMedia() {
         HashMap<String, Media> res = new HashMap<>();
         for (Media m : media.values()) {
-            System.out.println(m.getNome());
             res.put(m.getNome(), m);
         }
         return res;

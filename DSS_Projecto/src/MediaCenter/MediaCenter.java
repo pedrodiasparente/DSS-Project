@@ -110,6 +110,8 @@ public class MediaCenter {
     }
 
     public String[] getCurrentUserMedia(){
+        if(currentUser == null)
+            return new String[0];
         ArrayList<String> musicaReal = new ArrayList<>();
         for(Media m : this.currentUser.getBiblioteca().getMedia().values()){
             musicaReal.add(m.getNome());

@@ -30,6 +30,8 @@ class GuiLogin extends JFrame {
         b1.addActionListener(e -> {
             if(ctrl.login(name.getText(), String.valueOf(pass.getPassword()))){
                 ctrl.showMainMenu();
+                name.setText("");
+                pass.setText("");
             }
         });
 
@@ -37,7 +39,7 @@ class GuiLogin extends JFrame {
         p.setBounds(70,130,90,60);
         name.setBounds(200,100,90,20);
         pass.setBounds(200,140,90,20);
-        b1.setBounds(100,260,70,40);
+        b1.setBounds(100,260,120,40);
 
         this.setSize(400,400);
         this.add(n);

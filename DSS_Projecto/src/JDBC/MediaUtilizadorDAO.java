@@ -114,7 +114,8 @@ public class MediaUtilizadorDAO implements Map<String,Media> {
                     "duracao = '"+ value.getDuracao() +"'," +
                     "categoriaDefault = '" + value.getCategoria() + "'," +
                     "artista = '" + value.getArtista() + "';");
-            String sql = "INSERT INTO UtilizadorMedia (Utilizador_email, Media_nome, categoria) VALUES ('"+ currentUser.getEmail() +"','"+ key +"','" + value.getCategoria() + "');";
+            String sql = "INSERT INTO UtilizadorMedia (Utilizador_email, Media_nome, categoria) VALUES ('"+ currentUser.getEmail() +"','"+ key +"','" + value.getCategoria() + "') ON DUPLICATE KEY UPDATE " +
+                    "categoria = '" + value.getCategoria() + "';";
             stm.executeUpdate(sql);
             return new Media(value.getDuracao(),value.getCategoria(),value.getArtista(), value.getNome());
         }

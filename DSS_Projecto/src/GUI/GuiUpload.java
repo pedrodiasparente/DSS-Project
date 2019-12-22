@@ -57,7 +57,7 @@ class GuiUpload extends JFrame {
         this.add(b1);
         this.add(bBack);
 
-        this.setTitle("Login");
+        this.setTitle("Carregar Conteudo");
 
     }
 

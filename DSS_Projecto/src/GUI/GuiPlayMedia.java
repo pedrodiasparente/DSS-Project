@@ -84,10 +84,12 @@ class GuiPlayMedia extends JFrame {
             if(musicas.size() > 0) {
                 ctrl.showPlayer();
             }
+            for (int i = toPlay.size()-1; i >= 0; i--) {
+                toPlay.remove(i);
+            }
             ctrl.reproduzirConteudo();
         });
         bCleanPlay.addActionListener(e -> {
-            ArrayList<String> musicas = new ArrayList<>();
             for (int i = toPlay.size()-1; i >= 0; i--) {
                 toPlay.remove(i);
             }

@@ -27,7 +27,7 @@ class GuiAlterarCategoria extends JFrame {
 
         //Labels
         currentUserMedia = new DefaultListModel<>();
-        bPlayMedia = new JButton("Play");
+        bPlayMedia = new JButton("Alterar");
         bBack = new JButton("Back");
         categoria = new JTextField(50);
         conteudoCurrentUser = new JList<>(currentUserMedia);

@@ -75,7 +75,7 @@ public class MediaCenter {
         for (Media m : currentUser.getBiblioteca().getMedia().values()) {
             if (m.getNome().equals(nome)) {
                 m.setMediaCategoria(categoria);
-                currentUser.getBiblioteca().getMedia().put(m.getNome(), m);
+                currentUser.getBiblioteca().addMedia(m);
                 res = true;
             }
         }
@@ -121,24 +121,6 @@ public class MediaCenter {
 
     public void addConteudo (Media m){
         this.currentUser.getBiblioteca().addMedia(m);
-    }
-
-    public int carregarConteudo(HashMap<String, Media> conteudo) {
-        int res = 0;
-        for (Media m : conteudo.values()) {
-            if (!(validaConteudoGeral(m)) && !(validaConteudoPessoal(m))) {
-                addConteudo(m);
-                res = 1;
-            }
-            if(validaConteudoGeral(m) && !(validaConteudoPessoal(m))){
-                addConteudo(m);
-                res = 2;
-            }
-            if(validaConteudoPessoal(m) && validaConteudoGeral(m)) {
-                res = 0;
-            }
-        }
-        return res;
     }
 
     //play media operations

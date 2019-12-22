@@ -156,7 +156,7 @@ public class MediaDAO implements Map<String,Media> {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23")) {
             Collection<Media> col = new HashSet<Media>();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM MEDIA");
+            ResultSet rs = stm.executeQuery("SELECT * FROM Media");
             for (; rs.next(); ) {
                 col.add(new Media(rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(1)));
             }

@@ -25,7 +25,6 @@ class GuiAlterarCategoria extends JFrame {
         this.setTitle("Alterar Categoria");
 
         //Labels
-        conteudoCurrentUser = new JList<>(ctrl.getCurrentUserMedia());
         bPlayMedia = new JButton("Play");
         categoria = new JTextField(50);
 
@@ -52,5 +51,12 @@ class GuiAlterarCategoria extends JFrame {
         this.add(scrollCurrentUser);
         this.add(bPlayMedia);
         this.add(categoria);
+    }
+
+    @Override
+    public void setVisible(boolean bool){
+        super.setVisible(bool);
+        if(bool)
+            conteudoCurrentUser = new JList<>(ctrl.getCurrentUserMedia());
     }
 }

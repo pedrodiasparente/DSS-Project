@@ -1,57 +1,59 @@
 package GUI;
 
-import GUI.Controller;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-class GuiUpload extends Frame {
-    TextField name,pass;
-    Button b1,b2;
+class GuiUpload extends JFrame {
+    JTextField name, artista, categoria, duracao;
+    JButton b1,b2;
     Controller ctrl;
 
     GuiUpload(Controller controller) {
         ctrl = controller;
         addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e) {
-                dispose();
+                ctrl.dispose();
             }
         });
-        setLayout(new FlowLayout());
         this.setLayout(null);
-        Label n=new Label("Name:",Label.CENTER);
-        Label p=new Label("password:",Label.CENTER);
-        name=new TextField(20);
-        pass=new TextField(20);
-        pass.setEchoChar('#');
-        b1=new Button("submit");
-        b1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(b1.getLabel().equals("submit"))
-                    b1.setLabel("click me again");
-                else
-                    b1.setLabel("submit");
-            }
-        });
+
+        JLabel n = new JLabel("Name:");
+        JLabel a = new JLabel("Artista:");
+        JLabel c = new JLabel("Categoria:");
+        JLabel d = new JLabel("Duracao:");
+
+        name = new JTextField(20);
+        artista = new JTextField(20);
+        categoria = new JTextField(20);
+        duracao = new JTextField(20);
+        b1=new JButton("Adicionar media");
+
+        b1.addActionListener(e -> ctrl.addMedia(name.getText(), artista.getText(), categoria.getText(), Integer.parseInt(duracao.getText())));
+
+        n.setBounds(90,90,90,60);
+        a.setBounds(90,110,90,60);
+        c.setBounds(90,130,90,60);
+        d.setBounds(90,150,90,60);
+        name.setBounds(220,110,90,20);
+        artista.setBounds(220,130,90,20);
+        categoria.setBounds(220,150,90,20);
+        duracao.setBounds(220,170,90,20);
+        b1.setBounds(90,220,220,40);
+
         this.setSize(400,400);
         this.add(n);
+        this.add(a);
+        this.add(c);
+        this.add(d);
         this.add(name);
-        this.add(p);
-        this.add(pass);
+        this.add(artista);
+        this.add(categoria);
+        this.add(duracao);
         this.add(b1);
-        n.setBounds(70,90,90,60);
-        p.setBounds(70,130,90,60);
-        name.setBounds(200,100,90,20);
-        pass.setBounds(200,140,90,20);
-        b1.setBounds(100,260,70,40);
-        this.setTitle("B");
+
+        this.setTitle("Login");
 
     }
-    public static void main(String args[])
-    {
 
-    }
 }

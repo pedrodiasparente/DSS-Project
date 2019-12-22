@@ -42,9 +42,7 @@ public class MediaUtilizadorDAO implements Map<String,Media> {
     }
 
     public static MediaUtilizadorDAO getInstance(Utilizador currentUser) {
-        if (inst == null) {
-            inst = new MediaUtilizadorDAO(currentUser);
-        }
+        inst = new MediaUtilizadorDAO(currentUser);
         return inst;
     }
 
@@ -112,11 +110,11 @@ public class MediaUtilizadorDAO implements Map<String,Media> {
     public Media put(String key, Media value) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/MediaCenter?user=root&password=Broculos.23")) {
             Statement stm = conn.createStatement();
-            stm.executeUpdate("INSERT INTO Media (nome, duracao, categoriaDefault, artista) VALUES (" + value.getNome() + ", " + value.getDuracao() + ", " + value.getCategoria() +", " + value.getArtista() + ") ON DUPLICATE KEY UPDATE" +
-                    "duracao = "+ value.getDuracao() +"," +
-                    "categoriaDefault = " + value.getCategoria() + "," +
-                    "artista = " + value.getArtista() + ";");
-            String sql = "INSERT INTO UtilizadorMedia (Utilizador_email, Media_nome, categoria) VALUES ("+ currentUser.getEmail() +","+ key +"," + value.getCategoria() + ");";
+            stm.executeUpdate("INSERT INTO Media (nome, duracao, categoriaDefault, artista) VALUES ('" + value.getNome() + "', '" + value.getDuracao() + "', '" + value.getCategoria() +"', '" + value.getArtista() + "') ON DUPLICATE KEY UPDATE " +
+                    "duracao = '"+ value.getDuracao() +"'," +
+                    "categoriaDefault = '" + value.getCategoria() + "'," +
+                    "artista = '" + value.getArtista() + "';");
+            String sql = "INSERT INTO UtilizadorMedia (Utilizador_email, Media_nome, categoria) VALUES ('"+ currentUser.getEmail() +"','"+ key +"','" + value.getCategoria() + "');";
             stm.executeUpdate(sql);
             return new Media(value.getDuracao(),value.getCategoria(),value.getArtista(), value.getNome());
         }
@@ -154,7 +152,7 @@ public class MediaUtilizadorDAO implements Map<String,Media> {
             Collection<Media> col = new HashSet<Media>();
             String userEmail = currentUser.getEmail();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("select distinct u.email as Email_Utilizador, m.nome as Nome_Media from Utilizador u, UtilizadorMedia um, Media m where um.Media_nome = m.nome and um.Utilizador_email = u.email and u.email =  '" + userEmail + "'  order by u.email;");
+            ResultSet rs = stm.executeQuery("select m.nome as Nome, m.duracao as Duracao, m.categoriaDefault as categoria, m.artista as Artista from Utilizador u, UtilizadorMedia um, Media m where um.Media_nome = m.nome and um.Utilizador_email = u.email and u.email =  '" + userEmail + "'  order by u.email;");
             for (;rs.next();) {
                 col.add(new Media(rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(1)));
             }

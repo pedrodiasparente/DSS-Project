@@ -4,7 +4,6 @@ import JDBC.Teste;
 import MediaCenter.MediaCenter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Controller {
@@ -26,7 +25,7 @@ public class Controller {
         frames.set(LOGIN, new GuiLogin(this));
         frames.set(MAIN_MENU, new GuiMainMenu(this));
         frames.set(REPRODUZIR_CONTEUDO, new GuiPlayMedia(this));
-        frames.set(UPLOAD_CONTEUDO, new Gui(this));
+        frames.set(UPLOAD_CONTEUDO, new GuiUpload(this));
         frames.set(ALTERAR_CATEGORIA, new GuiAlterarCategoria(this));
         frames.set(PLAYER, new GuiFX(this));
     }
@@ -73,8 +72,8 @@ public class Controller {
         frames.get(PLAYER).setVisible(true);
     }
 
-    public void login(String email, String password){
-        mediaCenter.login(email);
+    public boolean login(String email, String password){
+        return mediaCenter.login(email,password);
     }
 
     public void logout(){
@@ -92,7 +91,8 @@ public class Controller {
 
 
     public void dispose(){
-        //GuiFX fx = (GuiFX) frames.get(PLAYER);
+        GuiFX fx = (GuiFX) frames.get(PLAYER);
+        fx.exit();
         for(JFrame f : frames){
             f.dispose();
         }
@@ -121,5 +121,9 @@ public class Controller {
     public void addUtilizadores(){
         Teste teste = new Teste();
         teste.addUtilizadores();
+    }
+
+    public void addMedia(String name, String artista, String categoria, int duracao) {
+        mediaCenter.addMedia(name,artista,categoria,duracao);
     }
 }

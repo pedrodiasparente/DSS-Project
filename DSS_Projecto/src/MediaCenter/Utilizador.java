@@ -11,7 +11,7 @@ public class Utilizador {
         this.nome = nome;
         this.email = email;
         this.password = password;
-        this.biblioteca = new Biblioteca();
+        this.biblioteca = new Biblioteca(this);
     }
     public String getNome(){
         return this.nome;

@@ -10,25 +10,30 @@ import java.util.HashMap;
 public class MediaCenter {
 
     private UtilizadorDAO utilizadores;
-    private Biblioteca bibliotecaGeral;
+    private BibliotecaGeral bibliotecaGeral;
     private Utilizador admin;
     private Utilizador currentUser;
     private ArrayList<String> toPlay;
 
     public MediaCenter(){
         utilizadores = UtilizadorDAO.getInstance();
-        bibliotecaGeral = new Biblioteca();
+        bibliotecaGeral = new BibliotecaGeral();
         admin = new Utilizador("admin", "admin", "admin");
         currentUser = null;
     }
 
-    public int login(String email) {
+    public boolean login(String email, String password) {
         if (validaUtilizador(email) != null) {
-            this.currentUser = validaUtilizador(email);
-            return 1;
+            Utilizador user = validaUtilizador(email);
+            if (user.getPassword().equals(password)){
+                currentUser = user;
+            return true;
+            }
+            System.out.println("Wrong password");
+            return false;
         }
         System.out.println("No existo");
-        return 0;
+        return false;
     }
 
     public Utilizador validaUtilizador(String email) {
@@ -105,38 +110,34 @@ public class MediaCenter {
     }
 
     public String[] getCurrentUserMedia(){
-        String [] musica = {"PotionSeller.mp4", "heydarren.mp4"};
-        //currentUser.getBiblioteca().getUserMedia(currentUser);
-        return musica;
+        ArrayList<String> musicaReal = new ArrayList<>();
+        for(Media m : this.currentUser.getBiblioteca().getMedia().values()){
+            musicaReal.add(m.getNome());
+        }
+        return musicaReal.toArray(new String[0]);
     }
 
     public String[] getMediaGlobal(){
-        String [] musica = {"PotionSeller.mp4", "heydarren.mp4","0-100 nigga real quick"};
-        /*String [] musicaReal = {};
+        ArrayList<String> musicaReal = new ArrayList<>();
         for(Media m : this.bibliotecaGeral.getMedia().values()){
-            musicaReal[musica.length] = m.getNome();
-        }*/
-        return musica;
+            musicaReal.add(m.getNome());
+        }
+        return musicaReal.toArray(new String[0]);
     }
 
-    public void addConteudoGeral (Media m){
-        this.bibliotecaGeral.getMedia().put(m.getNome(), m);
-    }
-
-    public void addConteudoPessoal (Media m){
-        this.currentUser.getBiblioteca().getMedia().put(m.getNome(), m);
+    public void addConteudo (Media m){
+        this.currentUser.getBiblioteca().addMedia(m);
     }
 
     public int carregarConteudo(HashMap<String, Media> conteudo) {
         int res = 0;
         for (Media m : conteudo.values()) {
             if (!(validaConteudoGeral(m)) && !(validaConteudoPessoal(m))) {
-                addConteudoGeral(m);
-                addConteudoPessoal(m);
+                addConteudo(m);
                 res = 1;
             }
             if(validaConteudoGeral(m) && !(validaConteudoPessoal(m))){
-                addConteudoPessoal(m);
+                addConteudo(m);
                 res = 2;
             }
             if(validaConteudoPessoal(m) && validaConteudoGeral(m)) {
@@ -162,4 +163,8 @@ public class MediaCenter {
         return null;
     }
 
+    public void addMedia(String name, String artista, String categoria, int duracao) {
+        Media m = new Media(duracao,categoria,artista,name);
+        this.addConteudo(m);
+    }
 }

@@ -58,7 +58,6 @@ public class GuiFX extends JFrame {
     }
 
     private void initComponents() {
-
         panel.add(jfxPanel, BorderLayout.CENTER);
 
         getContentPane().add(panel);
@@ -219,8 +218,18 @@ public class GuiFX extends JFrame {
                 player.setOnEndOfMedia(() -> {
                     System.out.println("end of media");
                     if(!ctrl.reproduzirConteudo())
-                        ctrl.showReproduzirConteudo();
+                       ctrl.showReproduzirConteudo();
                 });
+            }
+        });
+    }
+
+    public void exit(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                com.sun.javafx.application.PlatformImpl.tkExit();
+                Platform.exit();
             }
         });
     }

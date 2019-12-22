@@ -28,8 +28,6 @@ class GuiPlayMedia extends JFrame {
         DefaultListModel<String> toPlay = new DefaultListModel<>();
 
         //Labels
-        conteudoCurrentUser = new JList<>(ctrl.getCurrentUserMedia());
-        conteudoGlobal = new JList<>(ctrl.getMediaGlobal());
         conteudoToPlay = new JList<>(toPlay);
         bPlayMedia = new JButton("Play");
         bAddMedia1 = new JButton("Add");
@@ -63,25 +61,42 @@ class GuiPlayMedia extends JFrame {
         bAddMedia2.setBounds(120, 300, 90, 40);
         bCleanPlay.setBounds(290, 300, 90, 40);
 
-        JScrollPane scrollGlobal = new JScrollPane();
-        scrollGlobal.setViewportView(conteudoGlobal);
-        scrollGlobal.setBounds(20, 30, 90, 250);
-
-        JScrollPane scrollCurrentUser = new JScrollPane();
-        scrollCurrentUser.setViewportView(conteudoCurrentUser);
-        scrollCurrentUser.setBounds(120, 30, 90, 250);
 
         JScrollPane scrollToPlay = new JScrollPane();
         scrollToPlay.setViewportView(conteudoToPlay);
         scrollToPlay.setBounds(290, 30, 90, 190);
 
         //Adicionar à janela
-        this.add(scrollCurrentUser);
-        this.add(scrollGlobal);
         this.add(scrollToPlay);
         this.add(bAddMedia1);
         this.add(bAddMedia2);
         this.add(bPlayMedia);
         this.add(bCleanPlay);
+    }
+
+    @Override
+    public void setVisible(boolean bool) {
+        super.setVisible(bool);
+        if (bool) {
+            if (ctrl.getCurrentUserMedia() != null)
+                conteudoCurrentUser = new JList<>(ctrl.getCurrentUserMedia());
+            else
+                conteudoCurrentUser = new JList<>();
+            if (ctrl.getMediaGlobal() != null)
+                conteudoGlobal = new JList<>(ctrl.getMediaGlobal());
+            else
+                conteudoGlobal = new JList<>();
+
+            JScrollPane scrollGlobal = new JScrollPane();
+            scrollGlobal.setViewportView(conteudoGlobal);
+            scrollGlobal.setBounds(20, 30, 90, 250);
+
+            JScrollPane scrollCurrentUser = new JScrollPane();
+            scrollCurrentUser.setViewportView(conteudoCurrentUser);
+            scrollCurrentUser.setBounds(120, 30, 90, 250);
+
+            this.add(scrollCurrentUser);
+            this.add(scrollGlobal);
+        }
     }
 }

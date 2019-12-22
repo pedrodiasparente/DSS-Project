@@ -15,7 +15,7 @@ public class Teste {
         usrDAO.put(userPedro.getEmail(), userPedro);
         usrDAO.put(userNuno.getEmail(), userNuno);
         usrDAO.put(userAnt.getEmail(), userAnt);
-        Media media = new Media(6, "Jazzzz", "Darren", "heydarren.mp4");
-        userAdmin.getBiblioteca().getMedia().put(media.getNome(), media);
+        //Media media = new Media(6, "Jazzzz", "Darren", "heydarren.mp4");
+        //userAdmin.getBiblioteca().getMedia().put(media.getNome(), media);
     }
 }

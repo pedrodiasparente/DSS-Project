@@ -27,18 +27,25 @@ class GuiLogin extends JFrame {
         pass=new JPasswordField(20);
         pass.setEchoChar('#');
         b1=new JButton("submit");
-        b1.addActionListener(e -> ctrl.login(name.getText(), pass.getText()));
+        b1.addActionListener(e -> {
+            if(ctrl.login(name.getText(), String.valueOf(pass.getPassword()))){
+                ctrl.showMainMenu();
+            }
+        });
+
+        n.setBounds(70,90,90,60);
+        p.setBounds(70,130,90,60);
+        name.setBounds(200,100,90,20);
+        pass.setBounds(200,140,90,20);
+        b1.setBounds(100,260,70,40);
+
         this.setSize(400,400);
         this.add(n);
         this.add(name);
         this.add(p);
         this.add(pass);
         this.add(b1);
-        n.setBounds(70,90,90,60);
-        p.setBounds(70,130,90,60);
-        name.setBounds(200,100,90,20);
-        pass.setBounds(200,140,90,20);
-        b1.setBounds(100,260,70,40);
+
         this.setTitle("Login");
 
     }

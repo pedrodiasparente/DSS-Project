@@ -2,6 +2,8 @@ package GUI;
 
 
 
+import MediaCenter.Media;
+
 import javax.swing.*;
 
 import java.awt.event.WindowAdapter;
@@ -10,10 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 class GuiPlayMedia extends JFrame {
-    private JButton bAddMedia2, bAddMedia1, bPlayMedia, bCleanPlay, bBack;
+    private JButton bAddMedia2, bAddMedia1, bPlayMedia, bCleanPlay, bBack, bArtista, bCategoria;
+
     private JList<String> conteudoCurrentUser;
     private JList<String> conteudoGlobal;
     private JList<String> conteudoToPlay;
+
     DefaultListModel<String> toPlay;
     DefaultListModel<String> currentUserMedia;
     DefaultListModel<String> globalMedia;
@@ -21,6 +25,9 @@ class GuiPlayMedia extends JFrame {
     JScrollPane scrollToPlay;
     JScrollPane scrollGlobal;
     JScrollPane scrollCurrentUser;
+
+    JTextField artista;
+    JTextField categoria;
 
     private Controller ctrl;
 
@@ -32,7 +39,7 @@ class GuiPlayMedia extends JFrame {
             }
         });
         this.setLayout(null);
-        this.setSize(400, 400);
+        this.setSize(400, 500);
         this.setTitle("Reproduzir Conteudo");
         toPlay = new DefaultListModel<>();
         globalMedia = new DefaultListModel<>();
@@ -47,14 +54,23 @@ class GuiPlayMedia extends JFrame {
         }
 
         //Labels
+        JLabel a = new JLabel("Artista:");
+        JLabel c = new JLabel("Categoria:");
+
         conteudoToPlay = new JList<>(toPlay);
         conteudoCurrentUser = new JList<>(currentUserMedia);
         conteudoGlobal = new JList<>(globalMedia);
+
         bPlayMedia = new JButton("Play");
         bAddMedia1 = new JButton("Add");
         bAddMedia2 = new JButton("Add");
         bCleanPlay = new JButton("Clean");
         bBack = new JButton("Back");
+        bArtista = new JButton(("Add"));
+        bCategoria = new JButton(("Add"));
+
+        artista = new JTextField(20);
+        categoria = new JTextField(20);
 
         //Adicionar funcionalidade aos botões
         bAddMedia1.addActionListener(e -> toPlay.addElement(conteudoGlobal.getSelectedValue()));
@@ -77,6 +93,19 @@ class GuiPlayMedia extends JFrame {
             }
         });
         bBack.addActionListener(e -> ctrl.showMainMenu());
+        bArtista.addActionListener(e -> {
+            for (Media m : ctrl.getMediaFull().values()) {
+                if(m.getArtista().equals(artista.getText()))
+                    toPlay.addElement(m.getNome());
+            }
+        });
+
+        bCategoria.addActionListener(e -> {
+            for (Media m : ctrl.getMediaFull().values()) {
+                if(m.getCategoria().equals(categoria.getText()))
+                    toPlay.addElement(m.getNome());
+            }
+        });
 
         //Posicionar Botões
         bPlayMedia.setBounds(290, 240, 90, 40);
@@ -84,7 +113,13 @@ class GuiPlayMedia extends JFrame {
         bAddMedia2.setBounds(120, 300, 90, 40);
         bCleanPlay.setBounds(290, 300, 90, 40);
         bBack.setBounds(5,5,70,20);
+        bArtista.setBounds(230,380,90,20);
+        bCategoria.setBounds(230,420,90,20);
 
+        artista.setBounds(120,380,90,20);
+        categoria.setBounds(120,420,90,20);
+        a.setBounds(20,360,90,60);
+        c.setBounds(20,400,90,60);
 
         scrollToPlay = new JScrollPane();
         scrollToPlay.setViewportView(conteudoToPlay);
@@ -102,6 +137,12 @@ class GuiPlayMedia extends JFrame {
         this.add(scrollCurrentUser);
         this.add(scrollGlobal);
         this.add(scrollToPlay);
+        this.add(artista);
+        this.add(categoria);
+        this.add(a);
+        this.add(c);
+        this.add(bArtista);
+        this.add(bCategoria);
         this.add(bAddMedia1);
         this.add(bAddMedia2);
         this.add(bPlayMedia);

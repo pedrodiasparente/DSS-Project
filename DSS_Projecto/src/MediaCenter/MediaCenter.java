@@ -70,21 +70,13 @@ public class MediaCenter {
         }
     }
 
-    public int alteraCategoria(String nome, String categoria) {
-        int res = 0;
-		/*
-		for (MediaCenter.Media m : this.bibliotecaGeral.getMedia().values()) {
-			if (nome == m.getMediaNome()) {
-				m.setMediaCategoria(categoria);
-				res = 1;
-			}
-		}
-
-		 */
+    public boolean alteraCategoria(String nome, String categoria) {
+        boolean res = false;
         for (Media m : currentUser.getBiblioteca().getMedia().values()) {
-            if (m.getNome() == nome) {
+            if (m.getNome().equals(nome)) {
                 m.setMediaCategoria(categoria);
-                res = 1;
+                currentUser.getBiblioteca().getMedia().put(m.getNome(), m);
+                res = true;
             }
         }
         return res;
@@ -168,5 +160,9 @@ public class MediaCenter {
     public void addMedia(String name, String artista, String categoria, int duracao) {
         Media m = new Media(duracao,categoria,artista,name);
         this.addConteudo(m);
+    }
+
+    public BibliotecaGeral getBibliotecaGeral() {
+        return bibliotecaGeral;
     }
 }

@@ -1,10 +1,11 @@
 package GUI;
 
 import JDBC.Teste;
-import MediaCenter.MediaCenter;
+import MediaCenter.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controller {
     private MediaCenter mediaCenter;
@@ -125,5 +126,13 @@ public class Controller {
 
     public void addMedia(String name, String artista, String categoria, int duracao) {
         mediaCenter.addMedia(name,artista,categoria,duracao);
+    }
+
+    public void alteraCategoria(String media, String newCategoria) {
+        mediaCenter.alteraCategoria(media, newCategoria);
+    }
+
+    public HashMap<String, Media> getMediaFull() {
+        return mediaCenter.getBibliotecaGeral().getMedia();
     }
 }

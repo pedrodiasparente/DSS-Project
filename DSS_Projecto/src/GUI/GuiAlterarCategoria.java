@@ -10,6 +10,7 @@ import java.util.ArrayList;
 class GuiAlterarCategoria extends JFrame {
     private JButton bPlayMedia, bBack;
     private JList<String> conteudoCurrentUser;
+    private DefaultListModel<String> currentUserMedia;
     private  JTextField categoria;
     private Controller ctrl;
 
@@ -25,18 +26,15 @@ class GuiAlterarCategoria extends JFrame {
         this.setTitle("Alterar Categoria");
 
         //Labels
+        currentUserMedia = new DefaultListModel<>();
         bPlayMedia = new JButton("Play");
         bBack = new JButton("Back");
         categoria = new JTextField(50);
+        conteudoCurrentUser = new JList<>(currentUserMedia);
 
         //Adicionar funcionalidade aos botões
         bPlayMedia.addActionListener(e -> {
-            ctrl.addUtilizadores();
-            /*ArrayList<String> musicas = new ArrayList<>();
-            for(int i = 0; i < toPlay.size(); i++){
-                musicas.add(toPlay.get(i));
-            }
-            ctrl.reproduzirConteudo(musicas.toArray(new String[0]));*/
+            ctrl.alteraCategoria(conteudoCurrentUser.getSelectedValue(), categoria.getText());
         });
 
         bBack.addActionListener(e -> ctrl.showMainMenu());
@@ -60,7 +58,11 @@ class GuiAlterarCategoria extends JFrame {
     @Override
     public void setVisible(boolean bool){
         super.setVisible(bool);
-        if(bool)
-            conteudoCurrentUser = new JList<>(ctrl.getCurrentUserMedia());
+        if (bool) {
+            currentUserMedia.clear();
+            for(String media : ctrl.getCurrentUserMedia()){
+                currentUserMedia.add(currentUserMedia.size(), media);
+            }
+        }
     }
 }

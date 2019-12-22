@@ -159,7 +159,6 @@ class GuiPlayMedia extends JFrame {
             for(String media : ctrl.getMediaGlobal()){
                 globalMedia.add(globalMedia.size(), media);
             }
-
             for(String media : ctrl.getCurrentUserMedia()){
                 currentUserMedia.add(currentUserMedia.size(), media);
             }
